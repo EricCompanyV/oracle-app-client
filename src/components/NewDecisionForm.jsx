@@ -1,11 +1,15 @@
 import { useForm } from "@mantine/form";
-import { Button, Input, InputWrapper, MultiSelect } from "@mantine/core";
+import { Button, Input, InputWrapper, MultiSelect, RadioGroup, Radio } from "@mantine/core";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 
 function NewDecisionForm() {
-  const [dataOptions, setDataOptions] = useState([""]);
-  const [dataCriteria, setDataCriteria] = useState(["Necessity"]);
+  const [dataOptions, setDataOptions] = useState([]);
+  const [dataCriteria, setDataCriteria] = useState([]);
+  const [weights, setWeights] = useState([]);
+  const [dataOptionByCriterium, setDataOptionByCriterium] = useState([]);
+
+  
 
   const navigate = useNavigate()
 
@@ -58,7 +62,13 @@ function NewDecisionForm() {
           creatable
           maxSelectedValues={2}
           getCreateLabel={(query) => `+ Create ${query}`}
-          onCreate={(query) => setDataOptions((current) => [...current, query])}
+          onCreate={(query) => {
+            let newDataOptions = []
+            newDataOptions = [...dataOptions,query]
+            setDataOptions((current) => [...current, query])
+            console.log(newDataOptions, query)
+          }}
+          onChange={(event) => console.log(event)}
           {...form.getInputProps("options")}
         />
         <MultiSelect
@@ -75,7 +85,37 @@ function NewDecisionForm() {
           }
           {...form.getInputProps("criterium")}
         />
-        <Button type="submit">Create</Button>
+        {dataCriteria.map((criterium, index) => {
+          return (
+            <div>
+              <p key={criterium}>Please attach a weight to this criterium: {criterium}</p>
+              <RadioGroup
+                value={weights[index]}
+                onChange={setWeights[index]}
+                required
+              >
+                <Radio value={3} label="Very important" />
+                <Radio value={2} label="So/so" />
+                <Radio value={1} label="Not so important" />
+              </RadioGroup>
+            </div>
+          )
+        })}
+        {dataCriteria.map((criterium, index) => {
+          return (
+            <div>
+              <p>When you consider {criterium}: Which option is preferable?</p>
+              <RadioGroup>
+                value={dataOptionByCriterium[index]}
+                onChange={setDataOptionByCriterium[index]}
+                <Radio value="1" label={dataOptions[0]} />
+                <Radio value="2" label={dataOptions[1]} />
+              </RadioGroup>
+            </div>
+            
+          )
+        })}
+        <Button type="submit">Make the choice</Button>
       </form>
     </>
   );
