@@ -7,7 +7,10 @@ import {
   MediaQuery,
   Burger,
   useMantineTheme,
+  Anchor,
 } from "@mantine/core";
+
+import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
 function Layout({ children }) {
@@ -42,7 +45,8 @@ function Layout({ children }) {
         </Footer>
       }
       header={
-        <Header height={70} p="md">
+        <Header height={70} p="md" 
+              align="center">
           <div
             style={{ display: "flex", alignItems: "center", height: "100%" }}
           >
@@ -54,9 +58,25 @@ function Layout({ children }) {
                 color={theme.colors.gray[6]}
                 mr="xl"
               />
-            </MediaQuery>
-
-            <Text>Application header</Text>
+            </MediaQuery>{" "}
+            <Anchor
+              component={NavLink}
+              to="/signup"
+              style={({ isActive }) =>
+                isActive ? { color: "blue" } : { color: "black" }
+              }
+            >
+              Signup
+            </Anchor>
+            <Anchor
+              component={NavLink}
+              to="/login"
+              style={({ isActive }) =>
+                isActive ? { color: "blue" } : { color: "black" }
+              }
+            >
+              Login
+            </Anchor>
           </div>
         </Header>
       }

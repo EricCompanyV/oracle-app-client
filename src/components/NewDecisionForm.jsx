@@ -1,10 +1,13 @@
 import { useForm } from "@mantine/form";
 import { Button, Input, InputWrapper, MultiSelect } from "@mantine/core";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 
 function NewDecisionForm() {
   const [dataOptions, setDataOptions] = useState([""]);
   const [dataCriteria, setDataCriteria] = useState(["Necessity"]);
+
+  const navigate = useNavigate()
 
   const form = useForm({
     initialValues: {
@@ -15,13 +18,17 @@ function NewDecisionForm() {
       author: "",
     },
   });
+
   const handleSubmit = (values) => {
+    console.log(values)
     try {
       if (values.options.length < 2) {
         throw new Error("You need to input 2 options");
       }
+      navigate("/signup")
     } catch (error) {
-        form.setErrors()
+        console.log(error)
+        form.setErrors({options: error})
     }
   };
 
