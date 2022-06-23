@@ -3,6 +3,68 @@ import { Button, Input, InputWrapper, MultiSelect, RadioGroup, Radio } from "@ma
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 
+function NewDecisionForm() {
+  const [formStep, setFormStep] = useState(1)
+  const [decisionData, setDecisionData] = useState({
+    name: "",
+    description: "",
+    options: [],
+    criteria: [],
+    result: undefined,
+    isPublic: false,
+  })
+
+  console.log(decisionData);
+
+  const handleSubmit = () => {
+    setFormStep(formStep + 1);
+  }
+
+  const handleNameInput = event => {
+    let updatedValue = {}
+    updatedValue = { name: event.target.value }
+    setDecisionData(decisionData => ({
+      ...decisionData, ...updatedValue
+    }))
+  }
+
+  const formStep1 = (
+    <form onSubmit={handleSubmit}>
+      <InputWrapper
+      required
+      label="Name"
+      description="The name of the new decision"
+      >
+        <Input 
+          type="text"
+          name="name"
+          value={decisionData.name}
+          onChange={handleNameInput}
+        />
+      </InputWrapper>
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+  
+  const formStep2 = (
+    <h1>Hi there you are currently on step 2</h1>
+  )
+
+
+  switch (formStep) {
+    case 1:
+      return formStep1
+    case 2:
+      return formStep2
+    default:
+      break;
+  }
+}
+
+
+
+
+
 /* function NewDecisionForm() {
   const [dataOptions, setDataOptions] = useState([]);
   const [dataCriteria, setDataCriteria] = useState([]);
