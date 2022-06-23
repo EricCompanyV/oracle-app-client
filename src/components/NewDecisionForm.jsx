@@ -3,7 +3,7 @@ import { Button, Input, InputWrapper, MultiSelect, RadioGroup, Radio } from "@ma
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 
-function NewDecisionForm() {
+/* function NewDecisionForm() {
   const [dataOptions, setDataOptions] = useState([]);
   const [dataCriteria, setDataCriteria] = useState([]);
   const [weights, setWeights] = useState([]);
@@ -119,6 +119,6 @@ function NewDecisionForm() {
       </form>
     </>
   );
-}
+} */
 
 export default NewDecisionForm;
