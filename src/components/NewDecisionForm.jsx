@@ -16,30 +16,33 @@ function NewDecisionForm() {
 
   console.log(decisionData);
 
-  const handleSubmit = () => {
+  const handlePartialSubmit = (event) => {
+    event.preventDefault()
+    console.log("handleSubmit called")
     setFormStep(formStep + 1);
   }
 
-  const handleNameInput = event => {
+  const handleInput = event => {
+    
     let updatedValue = {}
-    updatedValue = { name: event.target.value }
+    updatedValue = { [event.target.name]: event.target.value }
     setDecisionData(decisionData => ({
       ...decisionData, ...updatedValue
     }))
   }
 
   const formStep1 = (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handlePartialSubmit}>
       <InputWrapper
-      required
-      label="Name"
+      label="The Name"
       description="The name of the new decision"
       >
         <Input 
+          required
           type="text"
           name="name"
           value={decisionData.name}
-          onChange={handleNameInput}
+          onChange={handleInput}
         />
       </InputWrapper>
       <Button type="submit">Submit</Button>
@@ -47,7 +50,20 @@ function NewDecisionForm() {
   )
   
   const formStep2 = (
-    <h1>Hi there you are currently on step 2</h1>
+    <form onSubmit={handlePartialSubmit}>
+      <InputWrapper
+      label="The Description"
+      description="If you wish to do so, please describe the decision you're facing."
+      >
+        <Input 
+          type="text"
+          name="description"
+          value={decisionData.description}
+          onChange={handleInput}
+        />
+      </InputWrapper>
+      <Button type="submit">Submit</Button>
+    </form>
   )
 
 
