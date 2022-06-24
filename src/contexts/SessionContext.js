@@ -27,12 +27,19 @@ const SessionContextProvider = ({ children }) => {
     }
   };
 
+  
+  const logout = () => {
+    setToken()
+    localStorage.removeItem('authToken')
+    setIsAuthenticated(false)
+  }
+
   useEffect(() => {
     verifyAuth();
   }, []);
   return (
     <SessionContext.Provider
-      value={{ token, isAuthenticated, authenticateUser }}
+      value={{ token, isAuthenticated, authenticateUser, logout }}
     >
       {children}
     </SessionContext.Provider>

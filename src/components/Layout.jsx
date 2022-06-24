@@ -8,14 +8,20 @@ import {
   Burger,
   useMantineTheme,
   Anchor,
+  ActionIcon
 } from "@mantine/core";
 
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { SessionContext } from "../contexts/SessionContext";
+
+import { Logout } from 'tabler-icons-react'
 
 function Layout({ children }) {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+
+  const { isAuthenticated, logout } = useContext(SessionContext);
   return (
     <AppShell
       styles={{
@@ -45,8 +51,7 @@ function Layout({ children }) {
         </Footer>
       }
       header={
-        <Header height={70} p="md" 
-              align="center">
+        <Header height={70} p="md" align="center">
           <div
             style={{ display: "flex", alignItems: "center", height: "100%" }}
           >
@@ -68,15 +73,21 @@ function Layout({ children }) {
             >
               Signup
             </Anchor>
-            <Anchor
-              component={NavLink}
-              to="/login"
-              style={({ isActive }) =>
-                isActive ? { color: "blue" } : { color: "black" }
-              }
-            >
-              Login
-            </Anchor>
+            {isAuthenticated ? (
+                <ActionIcon onClick={logout}>
+                <Logout size={48} strokeWidth={2} color={'black'} />
+              </ActionIcon>
+            ) : (
+              <Anchor
+                component={NavLink}
+                to="/login"
+                style={({ isActive }) =>
+                  isActive ? { color: "blue" } : { color: "black" }
+                }
+              >
+                Login
+              </Anchor>
+            )}
           </div>
         </Header>
       }
