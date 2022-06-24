@@ -1,124 +1,257 @@
 import { useForm } from "@mantine/form";
-import { Button, Input, InputWrapper, MultiSelect, RadioGroup, Radio } from "@mantine/core";
+import { Button, Input, InputWrapper, MultiSelect, RadioGroup, Radio, SegmentedControl } from "@mantine/core";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 
 function NewDecisionForm() {
-  const [dataOptions, setDataOptions] = useState([]);
-  const [dataCriteria, setDataCriteria] = useState([]);
-  const [weights, setWeights] = useState([]);
-  const [dataOptionByCriterium, setDataOptionByCriterium] = useState([]);
+  const [formStep, setFormStep] = useState(1)
+  const [decisionData, setDecisionData] = useState({
+    name: "",
+    description: "",
+    options: ["", ""],
+    criteria: [{}, {}, {}, {}, {}, {}, {}],
+    result: undefined,
+    isPublic: false,
+  })
 
-  
+  console.log(decisionData);
 
-  const navigate = useNavigate()
+  const handlePartialSubmit = (event) => {
+    event.preventDefault()
+    setFormStep(formStep + 1);
+  }
 
-  const form = useForm({
-    initialValues: {
-      name: "",
-      description: "",
-      options: [],
-      criterium: [],
-      author: "",
-    },
-  });
+  const handleFinalSubmit = () => {
+    calculateResult();
+    setFormStep(formStep + 1);
+  }
 
-  const handleSubmit = (values) => {
-    console.log(values)
-    try {
-      if (values.options.length < 2) {
-        throw new Error("You need to input 2 options");
+  const handleInput = event => {
+    let updatedValue = {}
+    updatedValue = { [event.target.name]: event.target.value }
+    setDecisionData(decisionData => ({
+      ...decisionData, ...updatedValue
+    }))
+  }
+
+  const handleOptionsInput = event => {
+    let newOptionsArray = decisionData.options
+    newOptionsArray[event.target.name] = event.target.value
+    setDecisionData(decisionData => ({
+      ...decisionData, options: newOptionsArray
+    }))
+  }
+
+  const handleCriteriaInput = event => {
+    let newCriteriaArray = decisionData.criteria
+    newCriteriaArray[event.target.name].name = event.target.value
+  }
+
+  const handleWeightInput = event => {
+    console.log(event.target.value)
+    let newCriteriaArray = decisionData.criteria
+    newCriteriaArray[event.target.name].weight = event.target.value
+  }
+
+  const handlePreferencesInput = event => {
+    let newCriteriaArray = decisionData.criteria
+    newCriteriaArray[event.target.name].option = event.target.value
+  }
+
+  const calculateResult = () => {
+    let decision = true;
+
+    let pointsForOption1 = 0;
+    let pointsForOption2 = 0;
+
+    decisionData.criteria.map((criterium) => {
+      if (criterium.option === "1") {
+        pointsForOption1 += parseInt(criterium.weight);
+      } else if (criterium.option === "2") {
+        pointsForOption2 += parseInt(criterium.weight);
       }
-      navigate("/signup")
-    } catch (error) {
-        console.log(error)
-        form.setErrors({options: error})
-    }
-  };
+      return
+    })
 
-  return (
-    <>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <InputWrapper
+    console.log("Points for option 1:", pointsForOption1, "Points for option 2", pointsForOption2)
+
+    if (pointsForOption2 > pointsForOption1) {
+      decision = false;
+    }
+
+    setDecisionData(decisionData => ({
+      ...decisionData, result: decision
+    }))
+  }
+
+  const formStep1 = (
+    <form onSubmit={handlePartialSubmit}>
+      <InputWrapper
+        label="The Name"
+        description="The name of the new decision"
+      >
+        <Input
           required
-          label="Name"
-          description="The name of the new decision"
-        >
-          <Input {...form.getInputProps("name")} />
-        </InputWrapper>
-        <InputWrapper
-          required
-          label="Description"
-          description="The description of the new decision"
-        >
-          <Input {...form.getInputProps("description")} />
-        </InputWrapper>
-        <MultiSelect
-          label="Options to decide"
-          data={dataOptions}
-          required
-          placeholder="e.g. Living in the city vs in countryside"
-          searchable
-          creatable
-          maxSelectedValues={2}
-          getCreateLabel={(query) => `+ Create ${query}`}
-          onCreate={(query) => {
-            let newDataOptions = []
-            newDataOptions = [...dataOptions,query]
-            setDataOptions((current) => [...current, query])
-            console.log(newDataOptions, query)
-          }}
-          onChange={(event) => console.log(event)}
-          {...form.getInputProps("options")}
+          type="text"
+          name="name"
+          value={decisionData.name}
+          onChange={handleInput}
         />
-        <MultiSelect
-          label="Which criteria you want to apply"
-          data={dataCriteria}
-          required
-          placeholder="Noise, pollution, access to services..."
-          searchable
-          creatable
-          maxSelectedValues={7}
-          getCreateLabel={(query) => `+ Create ${query}`}
-          onCreate={(query) =>
-            setDataCriteria((current) => [...current, query])
-          }
-          {...form.getInputProps("criterium")}
+      </InputWrapper>
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+  
+  const formStep2 = (
+    <form onSubmit={handlePartialSubmit}>
+      <InputWrapper
+        label="The Description"
+        description="If you wish to do so, please describe the decision you're facing."
+      >
+        <Input
+          type="text"
+          name="description"
+          value={decisionData.description}
+          onChange={handleInput}
         />
-        {dataCriteria.map((criterium, index) => {
+      </InputWrapper>
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+
+  const formStep3 = (
+    <form onSubmit={handlePartialSubmit}>
+      <InputWrapper
+        label="The Possibilities"
+        description="Enter your possible courses of action."
+      >
+        <Input
+          type="text"
+          name="0"
+          value={decisionData.options[0]}
+          onChange={handleOptionsInput}
+        />
+        <Input
+          type="text"
+          name="1"
+          value={decisionData.options[1]}
+          onChange={handleOptionsInput}
+        />
+      </InputWrapper>
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+
+  const formStep4 = (
+    <form onSubmit={handlePartialSubmit}>
+      <InputWrapper
+        label="The Criteria"
+        description="Enter the criteria for this decision."
+      >
+        {decisionData.criteria.map((criterium, index) => {
           return (
-            <div>
-              <p key={criterium}>Please attach a weight to this criterium: {criterium}</p>
-              <RadioGroup
-                value={weights[index]}
-                onChange={setWeights[index]}
-                required
-              >
-                <Radio value={3} label="Very important" />
-                <Radio value={2} label="So/so" />
-                <Radio value={1} label="Not so important" />
-              </RadioGroup>
-            </div>
+            <Input
+              key={index}
+              type="text"
+              name={index}
+              value={decisionData.criteria[index].name}
+              onChange={handleCriteriaInput}
+            />
           )
         })}
-        {dataCriteria.map((criterium, index) => {
+      </InputWrapper>
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+  
+  const formStep5 = (
+    <form onSubmit={handlePartialSubmit}>
+      <InputWrapper
+        label="The Weights"
+        description="How important are these criteria to you? Enter a number between 1 and 10, where 10 is of the utmost importance."
+      >
+        {decisionData.criteria.map((criterium, index) => {
           return (
-            <div>
-              <p>When you consider {criterium}: Which option is preferable?</p>
-              <RadioGroup>
-                value={dataOptionByCriterium[index]}
-                onChange={setDataOptionByCriterium[index]}
-                <Radio value="1" label={dataOptions[0]} />
-                <Radio value="2" label={dataOptions[1]} />
-              </RadioGroup>
-            </div>
-            
+            <Input
+              key={index}
+              type="number"
+              name={index}
+              value={decisionData.criteria[index].weight}
+              onChange={handleWeightInput}
+            />
           )
         })}
-        <Button type="submit">Make the choice</Button>
-      </form>
-    </>
-  );
+      </InputWrapper>
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+
+  const formStep6 = (
+    <form onSubmit={handlePartialSubmit}>
+      <InputWrapper
+        label="The Preferences"
+        description={"Please enter 1 if the option " + decisionData.options[0] + " is preferable in terms of any of your criteria, 2 if " + decisionData.options[1] + " is preferable."}
+      >
+        {decisionData.criteria.map((criterium, index) => {
+          return (
+            <InputWrapper
+              label={decisionData.criteria[index].name}
+              key={index}
+            >
+              <Input
+                type="text"
+                name={index}
+                value={decisionData.criteria[index].option}
+                onChange={handlePreferencesInput}
+              />
+            </InputWrapper>
+          )
+        })}
+      </InputWrapper>
+      <Button type="submit">Submit</Button>
+    </form>
+  )
+
+  const formStep7 = (
+    <div>
+      <p>You told me everything I need to know. Are you ready to decide?</p>
+      <Button type="submit" onClick={handleFinalSubmit}>Yes</Button>
+    </div>
+  )
+
+  function displayResult() {
+    if (decisionData.result) {
+      return (
+        <p>{"You should do " + decisionData.options[0] + "."}</p>
+      )
+    } else {
+      return (
+        <p>{"You should do " + decisionData.options[1] + "."}</p>
+      )
+    }
+  }
+
+
+  switch (formStep) {
+    case 1:
+      return formStep1
+    case 2:
+      return formStep2
+    case 3:
+      return formStep3
+    case 4:
+      return formStep4
+    case 5:
+      return formStep5
+    case 6:
+      return formStep6
+    case 7:
+      return formStep7
+    case 8:
+      return displayResult()
+    default:
+      break;
+  }
 }
 
 export default NewDecisionForm;
