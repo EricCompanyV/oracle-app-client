@@ -293,7 +293,7 @@ function NewDecisionForm() {
       return formStep7
     case 8:
       return (
-        displayResult(),
+        displayResult(), 
         displaySignupButton()
       )
     default:
