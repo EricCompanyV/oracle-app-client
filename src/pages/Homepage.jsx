@@ -7,7 +7,7 @@ function Homepage() {
     <>
       <Text>
         Welcome to the first day of your life. Would you like to decide
-        something today
+        something today?
       </Text>
       <Box>
         <Button

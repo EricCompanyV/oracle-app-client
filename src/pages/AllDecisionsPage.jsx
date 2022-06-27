@@ -5,7 +5,7 @@ function AllUserDecisionsPage(props) {
     const [userDecisions, setDecisions] = useState({})
 
     const fetchDecisions = async () => {
-        const response = await fetch(`${BASE_API_URL}/decisions/:userId`)
+        const response = await fetch(`${BASE_API_URL}/decisions/`)
         setDecisions(response)
     }
     

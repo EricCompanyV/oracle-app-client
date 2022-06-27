@@ -26,7 +26,7 @@ function NewDecisionForm() {
 
   const handleFinalSubmit = () => {
     calculateResult();
-    createNewDecision();
+    createNewDecision(decisionData);
     setFormStep(formStep + 1);
   }
 
