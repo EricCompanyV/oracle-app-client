@@ -36,7 +36,7 @@ function App() {
           element={<AllDecisionsPage />}
         />
         <Route
-          path="/decisions/"
+          path="/decisions/:id"
           element={<AllDecisionsPage />}
         />
         <Route

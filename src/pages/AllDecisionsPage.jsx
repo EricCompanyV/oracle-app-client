@@ -32,7 +32,7 @@ function AllDecisionsPage(props) {
                     <div>
                         <Anchor
                             component={NavLink}
-                            to={`/decisions/:${decision._id}`}
+                            to={`/decisions/${decision._id}`}
                         >
                             {decision.name}
                         </Anchor>
