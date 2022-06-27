@@ -66,8 +66,10 @@ function NewDecisionForm() {
 
     decisionData.criteria.map((criterium) => {
       if (criterium.option === "1") {
+        console.log("Being counted for option1", criterium.name)
         pointsForOption1 += parseInt(criterium.weight);
       } else if (criterium.option === "2") {
+        console.log("Being counted for option2", criterium.name)
         pointsForOption2 += parseInt(criterium.weight);
       }
       return
@@ -126,12 +128,14 @@ function NewDecisionForm() {
         description="Enter your possible courses of action."
       >
         <Input
+          required
           type="text"
           name="0"
           value={decisionData.options[0]}
           onChange={handleOptionsInput}
         />
         <Input
+          required
           type="text"
           name="1"
           value={decisionData.options[1]}
@@ -146,18 +150,32 @@ function NewDecisionForm() {
     <form onSubmit={handlePartialSubmit}>
       <InputWrapper
         label="The Criteria"
-        description="Enter the criteria for this decision."
+        description="Enter up to seven criteria for this decision. A minimum of two criteria is necessary for this to make any sense."
       >
         {decisionData.criteria.map((criterium, index) => {
-          return (
-            <Input
-              key={index}
-              type="text"
-              name={index}
-              value={decisionData.criteria[index].name}
-              onChange={handleCriteriaInput}
-            />
-          )
+          // Make first two inputs required
+          if (index < 2) {
+            return (
+              <Input
+                key={index}
+                type="text"
+                name={index}
+                value={decisionData.criteria[index].name}
+                onChange={handleCriteriaInput}
+                required
+              />
+            )
+          } else {
+            return (
+              <Input
+                key={index}
+                type="text"
+                name={index}
+                value={decisionData.criteria[index].name}
+                onChange={handleCriteriaInput}
+              />
+            )
+          }
         })}
       </InputWrapper>
       <Button type="submit">Submit</Button>
@@ -171,15 +189,26 @@ function NewDecisionForm() {
         description="How important are these criteria to you? Enter a number between 1 and 10, where 10 is of the utmost importance."
       >
         {decisionData.criteria.map((criterium, index) => {
-          return (
-            <Input
-              key={index}
-              type="number"
-              name={index}
-              value={decisionData.criteria[index].weight}
-              onChange={handleWeightInput}
-            />
-          )
+          console.log(criterium.name)
+          if (criterium.name) {
+            return (
+              <InputWrapper
+                label={criterium.name}
+                key={index}
+              >
+                <Input
+                  type="number"
+                  name={index}
+                  value={decisionData.criteria[index].weight}
+                  onChange={handleWeightInput}
+                  min="1"
+                  max="10"
+                  step="1"
+                  required
+                />
+              </InputWrapper>
+            )
+          }
         })}
       </InputWrapper>
       <Button type="submit">Submit</Button>
@@ -193,19 +222,25 @@ function NewDecisionForm() {
         description={"Please enter 1 if the option " + decisionData.options[0] + " is preferable in terms of any of your criteria, 2 if " + decisionData.options[1] + " is preferable."}
       >
         {decisionData.criteria.map((criterium, index) => {
-          return (
-            <InputWrapper
-              label={decisionData.criteria[index].name}
-              key={index}
-            >
-              <Input
-                type="text"
-                name={index}
-                value={decisionData.criteria[index].option}
-                onChange={handlePreferencesInput}
-              />
-            </InputWrapper>
-          )
+          if (criterium.name) {
+            return (
+              <InputWrapper
+                label={decisionData.criteria[index].name}
+                key={index}
+              >
+                <Input
+                  type="number"
+                  name={index}
+                  value={decisionData.criteria[index].option}
+                  onChange={handlePreferencesInput}
+                  min="1"
+                  max="2"
+                  step="1"
+                  required
+                />
+              </InputWrapper>
+            )
+          }
         })}
       </InputWrapper>
       <Button type="submit">Submit</Button>
