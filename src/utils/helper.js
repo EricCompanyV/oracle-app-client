@@ -38,3 +38,15 @@ export const checkToken = async token => {
   
     return parsed
   }
+
+  export const createNewDecision = async (decision, userId) =>{
+    const response = await fetch(`${BASE_API_URL}/decision/create`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    const parsed = await response.json()
+
+    return parsed
+  }
