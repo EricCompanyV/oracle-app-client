@@ -6,6 +6,7 @@ const SessionContext = createContext();
 const SessionContextProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({})
 
   const authenticateUser = (responseToken) => {
     setToken(responseToken);
@@ -32,6 +33,11 @@ const SessionContextProvider = ({ children }) => {
     setToken()
     localStorage.removeItem('authToken')
     setIsAuthenticated(false)
+    setUser()
+  }
+
+  const declareUser = user => {
+    setUser(user)
   }
 
   useEffect(() => {
@@ -39,7 +45,7 @@ const SessionContextProvider = ({ children }) => {
   }, []);
   return (
     <SessionContext.Provider
-      value={{ token, isAuthenticated, authenticateUser, logout }}
+      value={{ token, isAuthenticated, authenticateUser, declareUser, user, logout }}
     >
       {children}
     </SessionContext.Provider>

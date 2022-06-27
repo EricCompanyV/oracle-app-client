@@ -8,11 +8,11 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/hooks";
 import { useContext } from "react";
-import { SessionContext } from '../contexts/SessionContext'
-import { login } from "../utils/helper";
+import { SessionContext } from "../contexts/SessionContext";
+import { checkToken, login } from "../utils/helper";
 
 function LoginPage() {
-    const { authenticateUser } = useContext(SessionContext)
+  const { authenticateUser, declareUser, token } = useContext(SessionContext);
   const form = useForm({
     initialValues: {
       username: "",
@@ -20,13 +20,15 @@ function LoginPage() {
     },
   });
 
+
   const logUser = async (values) => {
     try {
       const response = await login(values);
-      if(response.status === "KO") {
-        throw new Error(response.message)
+      declareUser(response.tempUser);
+      if (response.status === "KO") {
+        throw new Error(response.message);
       } else {
-        authenticateUser(response.token)
+        authenticateUser(response.token);
       }
     } catch (error) {}
   };

@@ -11,7 +11,8 @@ import {
 
 import { signup } from "../utils/helper";
 
-const SignupPage = () => {
+const SignupPage = ({decisionData}) => {
+  console.log("Signup decision data",decisionData)
   const navigate = useNavigate();
   const form = useForm({
     initialValues: {
@@ -23,7 +24,9 @@ const SignupPage = () => {
   const createUser = async (newUser) => {
     try {
       const response = await signup(newUser);
-
+      if(decisionData !== undefined) {
+        console.log(123131321313)
+      }
       if (response.status === "KO") {
         throw new Error(response.message);
       }

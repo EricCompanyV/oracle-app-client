@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 
 function NewDecisionForm() {
+  const navigate = useNavigate()
   const [formStep, setFormStep] = useState(1)
   const [decisionData, setDecisionData] = useState({
     name: "",
@@ -231,6 +232,14 @@ function NewDecisionForm() {
     }
   }
 
+  function displaySignupButton(){
+    return (
+      <Button type="submit" onClick={()=> {
+        navigate("/signup", {decisionData})
+      }}>Go to Signup</Button>
+    )
+  }
+
 
   switch (formStep) {
     case 1:
@@ -248,7 +257,10 @@ function NewDecisionForm() {
     case 7:
       return formStep7
     case 8:
-      return displayResult()
+      return (
+        displayResult(),
+        displaySignupButton()
+      )
     default:
       break;
   }

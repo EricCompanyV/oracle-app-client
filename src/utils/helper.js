@@ -11,6 +11,8 @@ export const authBase = async (endpoint, credentials) => {
       body: JSON.stringify(credentials),
     })
     const parsed = await response.json()
+    //declareUser(parsed.tempUser)
+    console.log(parsed)
   
     return parsed
   }
