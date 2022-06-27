@@ -3,6 +3,8 @@ import { Button, Input, InputWrapper, MultiSelect, RadioGroup, Radio, SegmentedC
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { createNewDecision } from "../utils/helper";
+import { SessionContext } from '../contexts/SessionContext'
+import { useContext } from 'react'
 
 function NewDecisionForm() {
   const navigate = useNavigate()
@@ -15,6 +17,7 @@ function NewDecisionForm() {
     result: undefined,
     isPublic: false,
   })
+  const { token } = useContext(SessionContext);
 
   console.log(decisionData);
 
@@ -26,7 +29,7 @@ function NewDecisionForm() {
 
   const handleFinalSubmit = () => {
     calculateResult();
-    createNewDecision(decisionData);
+    createNewDecision(decisionData, token);
     setFormStep(formStep + 1);
   }
 

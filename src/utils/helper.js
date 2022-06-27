@@ -58,7 +58,7 @@ export const checkToken = async token => {
     
   
   export const createNewDecision = async (decision, token) => {
-    const response = await fetch(`${BASE_API_URL}/decision/create`, {
+    const response = await fetch(`${BASE_API_URL}/api/decisions/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -80,17 +80,5 @@ export const checkToken = async token => {
       body: JSON.stringify(comment),
     })
     const parsed = await response.json()
-    return parsed
-  }
-
-  export const createNewDecision = async (decision, userId) =>{
-    const response = await fetch(`${BASE_API_URL}/decision/create`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    const parsed = await response.json()
-
     return parsed
   }
