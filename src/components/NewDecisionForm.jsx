@@ -29,8 +29,7 @@ function NewDecisionForm() {
 
   const handleFinalSubmit = () => {
     calculateResult();
-    createNewDecision(decisionData, token);
-    setFormStep(formStep + 1);
+    setFormStep(formStep + 1 );
   }
 
   const handleInput = event => {
@@ -298,9 +297,13 @@ function NewDecisionForm() {
     case 7:
       return formStep7
     case 8:
+      {createNewDecision(decisionData, token)}
       return (
-        displayResult(), 
-        displaySignupButton()
+        <div>
+          {displayResult()}, 
+          {displaySignupButton()}
+        </div>
+        
       )
     default:
       break;

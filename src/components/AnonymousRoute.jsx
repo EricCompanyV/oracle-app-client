@@ -6,7 +6,7 @@ const AnonymousRoute = ({ children }) => {
   const { isAuthenticated } = useContext(SessionContext)
 
   if (isAuthenticated) {
-    return <Navigate to='/error404' />
+    return <Navigate to='/decisions' />
   }
 
   return <>{children}</>

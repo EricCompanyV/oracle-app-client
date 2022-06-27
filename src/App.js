@@ -6,6 +6,7 @@ import NewDecisionForm from "./components/NewDecisionForm";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import AllDecisionsPage from "./pages/AllDecisionsPage";
 import AnonymousRoute from "./components/AnonymousRoute";
 
 function App() {
@@ -30,7 +31,16 @@ function App() {
             </AnonymousRoute>
           }
         />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route
+          path="/decisions"
+          element={<AllDecisionsPage />}
+        />
+        <Route
+          path="/decisions/"
+          element={<AllDecisionsPage />}
+        />
+        <Route
+          path="*" element={<NotFoundPage />} />
       </Routes>
     </Layout>
   );

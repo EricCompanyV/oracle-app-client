@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { SessionContext } from '../contexts/SessionContext';
 import { BASE_API_URL } from '../utils/constants';
+import { Anchor } from "@mantine/core";
 
-function AllUserDecisionsPage(props) {
-    const [userDecisions, setDecisions] = useState({})
+function AllDecisionsPage(props) {
+    const {token} = useContext(SessionContext)
+    const [decisions, setDecisions] = useState([])
 
     const fetchDecisions = async () => {
-        const response = await fetch(`${BASE_API_URL}/decisions/`)
-        setDecisions(response)
+        console.log("fetching decisions")
+        const response = await fetch(`${BASE_API_URL}/api/decisions/`,
+        {method: 'GET',headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          }})
+        const responseParsed = await response.json()
+        console.log(responseParsed)
+        setDecisions(responseParsed.decisions)
     }
     
     useEffect(() => {
@@ -15,13 +26,22 @@ function AllUserDecisionsPage(props) {
 
     return (
         <div>
-            {userDecisions.map((decision) => {
+            These are all the decisions that have been made.
+            {decisions.map((decision) => {
                 return (
-                    <p>decision.name decision.result</p>
+                    <div>
+                        <Anchor
+                            component={NavLink}
+                            to={`/decisions/:${decision._id}`}
+                        >
+                            {decision.name}
+                        </Anchor>
+                        <p> Final result is:{decision.result ? decision.options[0]: decision.options[1]}</p>
+                    </div>
                 )
             })}
         </div>
     );
 }
 
-export default AllUserDecisionsPage;
+export default AllDecisionsPage;

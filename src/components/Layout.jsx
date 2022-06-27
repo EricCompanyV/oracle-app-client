@@ -43,6 +43,11 @@ function Layout({ children }) {
           width={{ sm: 200, lg: 300 }}
         >
           <Text>Application navbar</Text>
+          <Anchor
+                component={NavLink}
+            to='/decisions'
+                style={({ isActive }) => (isActive ? { color: 'tomato' } : undefined)}
+          >All decisions</Anchor>
         </Navbar>
       }
       footer={
