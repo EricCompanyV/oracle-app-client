@@ -2,6 +2,7 @@ import { useForm } from "@mantine/form";
 import { Button, Input, InputWrapper, MultiSelect, RadioGroup, Radio, SegmentedControl } from "@mantine/core";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import { createNewDecision } from "../utils/helper";
 
 function NewDecisionForm() {
   const navigate = useNavigate()
@@ -22,8 +23,10 @@ function NewDecisionForm() {
     setFormStep(formStep + 1);
   }
 
+
   const handleFinalSubmit = () => {
     calculateResult();
+    createNewDecision();
     setFormStep(formStep + 1);
   }
 
