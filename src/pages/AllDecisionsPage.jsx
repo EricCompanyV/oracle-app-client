@@ -27,7 +27,7 @@ function AllDecisionsPage(props) {
             These are all the decisions that have been made.
             {decisions.map((decision) => {
                 return (
-                    <div>
+                    <div key={decision._id}>
                         <Anchor
                             component={NavLink}
                             to={`/decisions/${decision._id}`}
