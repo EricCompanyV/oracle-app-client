@@ -300,8 +300,10 @@ function NewDecisionForm() {
       {createNewDecision(decisionData, token)}
       return (
         <div>
-          {displayResult()}, 
-          {displaySignupButton()}
+          {displayResult()} 
+          {!token ? (
+            displaySignupButton()
+          ) : <div></div>}
         </div>
         
       )
