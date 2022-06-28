@@ -3,6 +3,7 @@ import { useForm } from '@mantine/form'
 import { useEffect } from 'react'
 
 const UpdateDecisionModal = ({ isModalOpen, setIsModalOpen, decisionId, decision, setNeedRefresh }) => {
+  console.log("decision passed to the update modal",decision)
   const form = useForm({
     initialValues: {
         name: '',
@@ -11,6 +12,8 @@ const UpdateDecisionModal = ({ isModalOpen, setIsModalOpen, decisionId, decision
         criteria: []
     },
   })
+
+  console.log(form)
 
   const updateDecision = async newValues => {
     await fetch(`http://localhost:5005/decisions/${decisionId}`, {
@@ -41,6 +44,7 @@ const UpdateDecisionModal = ({ isModalOpen, setIsModalOpen, decisionId, decision
                   {/*how does it work for the options, ie an array?*/}
         </InputWrapper>
         <InputWrapper required label='Options' description='criteria'>
+            <Input {...form.getInputProps('criteria')} />
             {/*how does it work the critera? We have to show criteria name, weight and preferred option*/}
         </InputWrapper>
         <Button type='submit'>Update decision</Button>

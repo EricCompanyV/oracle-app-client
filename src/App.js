@@ -7,6 +7,7 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import AllDecisionsPage from "./pages/AllDecisionsPage";
+import DecisionDetailPage from "./pages/DecisionDetailPage";
 import AnonymousRoute from "./components/AnonymousRoute";
 
 function App() {
@@ -36,8 +37,8 @@ function App() {
           element={<AllDecisionsPage />}
         />
         <Route
-          path="/decisions/:id"
-          element={<AllDecisionsPage />}
+          path="/decisions/:decisionId"
+          element={<DecisionDetailPage />}
         />
         <Route
           path="*" element={<NotFoundPage />} />

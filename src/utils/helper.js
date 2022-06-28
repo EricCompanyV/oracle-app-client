@@ -70,14 +70,14 @@ export const checkToken = async token => {
     return parsed
   }
 
-  export const createNewComment = async (comment, token) => {
-    const response = await fetch(`${BASE_API_URL}/comment/create`, {
+  export const createNewComment = async (comment, decisionId, token) => {
+    const response = await fetch(`${BASE_API_URL}/api/comments/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(comment),
+      body: JSON.stringify({comment, decisionId}),
     })
     const parsed = await response.json()
     return parsed
