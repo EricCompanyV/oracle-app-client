@@ -14,6 +14,7 @@ function DecisionDetailPage(props) {
     const { token } = useContext(SessionContext);
     const { user } = useContext(SessionContext);
 
+<<<<<<< HEAD
 
     const [decision, setDecision] = useState({ options: [], criteria: [{name:"", weight:1, option:1}]});
     const [comments, setComments] = useState([]);
@@ -37,6 +38,34 @@ function DecisionDetailPage(props) {
     useEffect(() => {
         fetchDecision();
     }, []);
+=======
+  const [decision, setDecision] = useState({});
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [needRefresh, setNeedRefresh] = useState(false);
+
+  const fetchDecision = async () => {
+    console.log("fecthing decision");
+    const response = await fetch(
+      `${BASE_API_URL}/api/decisions/${decisionId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const responseParsed = await response.json();
+    setDecision(responseParsed.decision);
+    setComments(responseParsed.commentsOnDecision);
+  };
+
+  useEffect(() => {
+    fetchDecision();
+  }, []);
+>>>>>>> Update-elements
 
     useEffect(() => {
         if (needRefresh) {
@@ -49,6 +78,7 @@ function DecisionDetailPage(props) {
         setComment(event.target.value);
     };
 
+<<<<<<< HEAD
     const handleCommentSubmit = (event) => {
         event.preventDefault();
         createNewComment(comment, decisionId, token);
@@ -62,6 +92,20 @@ function DecisionDetailPage(props) {
         });
         navigate("/decisions");
     };
+=======
+  const handleCommentSubmit = (event) => {
+    event.preventDefault();
+    createNewComment(comment, decisionId, token);
+    setNeedRefresh(true);
+  };
+
+  const deleteDecision = async () => {
+    await fetch(`${BASE_API_URL}/api/decisions/${decisionId}`, {
+      method: "DELETE",
+    });
+    navigate("/decisions");
+  };
+>>>>>>> Update-elements
 
   return (
     <div>
@@ -108,6 +152,7 @@ function DecisionDetailPage(props) {
             Show comments here
             If comment belongs to logged in user show delete comment button
             Show input for comment here if decision does not belong to logged in user*/}
+<<<<<<< HEAD
         {comments.map((comment) => (
             // maybe show username of person who wrote comment here too
             <Text key={comment.content}>{comment.content}</Text>
@@ -129,6 +174,25 @@ function DecisionDetailPage(props) {
             decision={decision}
             setNeedRefresh={setNeedRefresh}
         />
+=======
+      {comments.map((comment) => (
+        // maybe show username of person who wrote comment here too
+        <Text key={comment.content}>{comment.content}</Text>
+      ))}
+      <form onSubmit={handleCommentSubmit}>
+        <InputWrapper label="You can add a comment here">
+          <Input required value={comment} onChange={handleInput} />
+        </InputWrapper>
+        <Button type="submit">Submit</Button>
+      </form>
+      {isModalOpen&&<UpdateDecisionModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        decisionId={decisionId}
+        decision={decision}
+        setNeedRefresh={setNeedRefresh}
+      />}
+>>>>>>> Update-elements
     </div>
   );
 }
