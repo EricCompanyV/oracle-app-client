@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Divider, Input, InputWrapper, Text } from "@mantine/core";
+import { ActionIcon, Button, Divider, Input, InputWrapper, Text, Title } from "@mantine/core";
 import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,6 +12,7 @@ function DecisionDetailPage(props) {
     const { decisionId } = useParams();
     const navigate = useNavigate();
     const { token } = useContext(SessionContext);
+    const { user } = useContext(SessionContext);
 
 
     const [decision, setDecision] = useState({ options: [], criteria: [{name:"", weight:1, option:1}]});
@@ -64,9 +65,9 @@ function DecisionDetailPage(props) {
 
   return (
     <div>
-        <Text>The decision: {decision.name}</Text>
+        <Title order={1}>The decision: {decision.name}</Title>
         <Divider></Divider>
-        <Text>The desciption: {decision.description}</Text>
+        <Text>The description: {decision.description}</Text>
         <Divider></Divider>
         <Text>
             The options: <br/>
@@ -91,13 +92,18 @@ function DecisionDetailPage(props) {
         <Divider></Divider>
         <Text>The result: {decision.result ? decision.options[0] : decision.options[1]}</Text>
         <Divider></Divider>
-        <ActionIcon onClick={() => setIsModalOpen(true)}>
-            <Pencil size={48} strokeWidth={2} color={"blue"} />
-        </ActionIcon>
-        <ActionIcon onClick={deleteDecision}>
-            <Trash size={48} strokeWidth={2} color={"#bf4058"} />
-        </ActionIcon>
-        <Divider></Divider>
+        {user._id && user._id === decision.author ? (
+            <div>
+                <ActionIcon onClick={() => setIsModalOpen(true)}>
+                    <Pencil size={48} strokeWidth={2} color={"blue"} />
+                </ActionIcon>
+                <ActionIcon onClick={deleteDecision}>
+                    <Trash size={48} strokeWidth={2} color={"#bf4058"} />
+                </ActionIcon>
+                <Divider></Divider>
+            </div>
+            ) : <div></div>}
+        
       {/*If decision belongs to logged in user show edit and delete buttons}
             Show comments here
             If comment belongs to logged in user show delete comment button
