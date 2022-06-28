@@ -73,15 +73,17 @@ function Layout({ children }) {
                 mr="xl"
               />
             </MediaQuery>{" "}
-            <Anchor
-              component={NavLink}
-              to="/signup"
-              style={({ isActive }) =>
-                isActive ? { color: "blue" } : { color: "black" }
-              }
-            >
-              Signup
-            </Anchor>
+            {!isAuthenticated ? (
+              <Anchor
+                component={NavLink}
+                to="/signup"
+                style={({ isActive }) =>
+                  isActive ? { color: "blue" } : { color: "black" }
+                }
+              >
+                Signup
+              </Anchor>
+            ) : <div></div>}
             {isAuthenticated ? (
                 <ActionIcon onClick={logout}>
                 <Logout size={48} strokeWidth={2} color={'black'} />
