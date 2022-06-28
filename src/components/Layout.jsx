@@ -21,7 +21,8 @@ function Layout({ children }) {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
 
-  const { isAuthenticated, logout } = useContext(SessionContext);
+  const { isAuthenticated, logout, user } = useContext(SessionContext);
+  console.log(user)
   return (
     <AppShell
       styles={{
@@ -74,7 +75,7 @@ function Layout({ children }) {
               />
             </MediaQuery>{" "}
             {!isAuthenticated ? (
-              <Anchor
+              <><Anchor
                 component={NavLink}
                 to="/signup"
                 style={({ isActive }) =>
@@ -83,7 +84,17 @@ function Layout({ children }) {
               >
                 Signup
               </Anchor>
-            ) : <div></div>}
+              </>
+            ) : <div><Anchor
+            onClick={(event)=> console.log(event)}
+                component={NavLink}
+                to={`/decisions/user/${user._id}`}
+                style={({ isActive }) =>
+                  isActive ? { color: "blue" } : { color: "black" }
+                }
+              >
+                User
+              </Anchor></div>}
             {isAuthenticated ? (
                 <ActionIcon onClick={logout}>
                 <Logout size={48} strokeWidth={2} color={'black'} />
