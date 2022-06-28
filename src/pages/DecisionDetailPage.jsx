@@ -21,17 +21,14 @@ function DecisionDetailPage(props) {
   const [needRefresh, setNeedRefresh] = useState(false);
 
   const fetchDecision = async () => {
-    console.log("fecthing detail on a decision");
     const response = await fetch(
       `${BASE_API_URL}/api/decisions/${decisionId}`,
       {
         method: "GET",
       }
     );
-    console.log(response)
     const responseParsed = await response.json();
-    console.log("------->",responseParsed);
-    setDecision(responseParsed);
+    setDecision(responseParsed.decision);
     setComments(responseParsed.commentsOnDecision)
   };
 
@@ -53,7 +50,6 @@ function DecisionDetailPage(props) {
 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
-    console.log("comment:", {comment})
     createNewComment(comment, decisionId, token);
     setNeedRefresh(true)
   };
@@ -69,8 +65,7 @@ function DecisionDetailPage(props) {
   return (
     <div>
       <Text>{decision.name}</Text>
-      <Text>{decision.options}</Text>
-      <Text>{decision.criteria}</Text>
+      <Text>{decision.description}</Text>
       <Text>{decision.result}</Text>
       <Text>{decision.isPublic}</Text>
       <ActionIcon onClick={() => setIsModalOpen(true)}>
@@ -85,7 +80,7 @@ function DecisionDetailPage(props) {
             Show input for comment here if decision does not belong to logged in user*/}
       {comments.map((comment) => (
         // maybe show username of person who wrote comment here too
-        <Text>{comment.content}</Text>
+        <Text key={comment.content}>{comment.content}</Text>
       ))}
       <form onSubmit={handleCommentSubmit}>
         <InputWrapper label="You can add a comment here">

@@ -9,14 +9,12 @@ function AllDecisionsPage(props) {
     const [decisions, setDecisions] = useState([])
 
     const fetchDecisions = async () => {
-        console.log("fetching decisions")
         const response = await fetch(`${BASE_API_URL}/api/decisions/`,
         {method: 'GET',headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           }})
         const responseParsed = await response.json()
-        console.log(responseParsed)
         setDecisions(responseParsed.decisions)
     }
     

@@ -42,7 +42,6 @@ function Layout({ children }) {
           hidden={!opened}
           width={{ sm: 200, lg: 300 }}
         >
-          <Text>Application navbar</Text>
           <Anchor
                 component={NavLink}
             to='/decision-form'
