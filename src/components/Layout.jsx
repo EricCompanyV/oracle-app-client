@@ -45,6 +45,11 @@ function Layout({ children }) {
           <Text>Application navbar</Text>
           <Anchor
                 component={NavLink}
+            to='/decision-form'
+                style={({ isActive }) => (isActive ? { color: 'tomato' } : undefined)}
+          >New decision</Anchor>
+          <Anchor
+                component={NavLink}
             to='/decisions'
                 style={({ isActive }) => (isActive ? { color: 'tomato' } : undefined)}
           >All decisions</Anchor>
