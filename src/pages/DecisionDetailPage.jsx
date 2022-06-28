@@ -13,7 +13,6 @@ function DecisionDetailPage(props) {
   const navigate = useNavigate();
   const { token } = useContext(SessionContext);
 
-
   const [decision, setDecision] = useState({});
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
@@ -21,17 +20,21 @@ function DecisionDetailPage(props) {
   const [needRefresh, setNeedRefresh] = useState(false);
 
   const fetchDecision = async () => {
+    console.log("fecthing decision");
     const response = await fetch(
       `${BASE_API_URL}/api/decisions/${decisionId}`,
       {
         method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     const responseParsed = await response.json();
     setDecision(responseParsed.decision);
-    setComments(responseParsed.commentsOnDecision)
+    setComments(responseParsed.commentsOnDecision);
   };
-
 
   useEffect(() => {
     fetchDecision();
@@ -51,12 +54,11 @@ function DecisionDetailPage(props) {
   const handleCommentSubmit = (event) => {
     event.preventDefault();
     createNewComment(comment, decisionId, token);
-    setNeedRefresh(true)
+    setNeedRefresh(true);
   };
 
   const deleteDecision = async () => {
-    await fetch(
-        `${BASE_API_URL}/api/decisions/${decisionId}`, {
+    await fetch(`${BASE_API_URL}/api/decisions/${decisionId}`, {
       method: "DELETE",
     });
     navigate("/decisions");
@@ -84,21 +86,17 @@ function DecisionDetailPage(props) {
       ))}
       <form onSubmit={handleCommentSubmit}>
         <InputWrapper label="You can add a comment here">
-          <Input
-            required
-            value={comment}
-            onChange={handleInput}
-          />
+          <Input required value={comment} onChange={handleInput} />
         </InputWrapper>
         <Button type="submit">Submit</Button>
       </form>
-      <UpdateDecisionModal
+      {isModalOpen&&<UpdateDecisionModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         decisionId={decisionId}
         decision={decision}
         setNeedRefresh={setNeedRefresh}
-      />
+      />}
     </div>
   );
 }
