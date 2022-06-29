@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Button,
+  Card,
   Divider,
   Input,
   InputWrapper,
@@ -85,56 +86,72 @@ function DecisionDetailPage(props) {
 
   return (
     <div>
-      <Title order={1}>The decision: {decision.name}</Title>
-      <Divider></Divider>
-      <Text>The description: {decision.description}</Text>
-      <Divider></Divider>
-      <Text>
-        The options: <br />
-        {decision.options[0]} <br />
-        {decision.options[1]} <br />
-      </Text>
-      <Divider></Divider>
-      <Text>
-        The criteria, the weights and which option they were counted for: <br />
-        {decision.criteria.map((criterium, index) => {
-          if (criterium.name) {
-            return (
-              <Text>
-                Criterium {criterium.name} with a weight of {criterium.weight}{" "}
-                was counted for option {criterium.option}
-              </Text>
-            );
-          }
-        })}
-      </Text>
-      <Divider></Divider>
-      <Text>
-        The result:{" "}
-        {decision.result ? decision.options[0] : decision.options[1]}
-      </Text>
-      <Divider></Divider>
-      {user._id && user._id === decision.author ? (
-        <div>
-          <ActionIcon onClick={() => setIsModalOpen(true)}>
-            <Pencil size={48} strokeWidth={2} color={"blue"} />
-          </ActionIcon>
-          <ActionIcon onClick={deleteDecision}>
-            <Trash size={48} strokeWidth={2} color={"#bf4058"} />
-          </ActionIcon>
-          <Divider></Divider>
-        </div>
-      ) : (
-        <div></div>
-      )}
+      <Card
+        shadow='sm'
+        p='xl'
+        withBorder
+        sx={{
+          '&:hover': {
+              backgroundColor: '#EEEEEE',
+          },
+        marginTop: 10,
+        marginBottom: 10
+        }}>
+        <Title order={1}>The decision: {decision.name}</Title>
+        <Divider></Divider>
+        <Text>The description: {decision.description}</Text>
+        <Divider></Divider>
+        <Text>
+          The options: <br />
+          {decision.options[0]} <br />
+          {decision.options[1]} <br />
+        </Text>
+        <Divider></Divider>
+        <Text>
+          The criteria, the weights and which option they were counted for: <br />
+          {decision.criteria.map((criterium, index) => {
+            if (criterium.name) {
+              return (
+                <Text>
+                  Criterium {criterium.name} with a weight of {criterium.weight}{" "}
+                  was counted for option {criterium.option}
+                </Text>
+              );
+            }
+          })}
+        </Text>
+        <Divider></Divider>
+        <Text>
+          The result:{" "}
+          {decision.result ? decision.options[0] : decision.options[1]}
+        </Text>
+        <Divider></Divider>
+        {user._id && user._id === decision.author ? (
+          <div>
+            <ActionIcon onClick={() => setIsModalOpen(true)}>
+              <Pencil size={48} strokeWidth={2} color={"blue"} />
+            </ActionIcon>
+            <ActionIcon onClick={deleteDecision}>
+              <Trash size={48} strokeWidth={2} color={"#bf4058"} />
+            </ActionIcon>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </Card>
 
-      {/*If decision belongs to logged in user show edit and delete buttons}
-            Show comments here
-            If comment belongs to logged in user show delete comment button
-            Show input for comment here if decision does not belong to logged in user*/}
       {comments?.map((comment) => (
-        // maybe show username of person who wrote comment here too
-        <>
+        <Card
+          shadow='sm'
+          p='xl'
+          withBorder
+          sx={{
+            '&:hover': {
+                backgroundColor: '#EEEEEE',
+            },
+          marginTop: 10,
+          marginBottom: 10
+        }}>
           <Text key={comment.content}>
             {comment.content + " by " + comment.author.username}
           </Text>
@@ -145,7 +162,7 @@ function DecisionDetailPage(props) {
           ) : (
             <></>
           )}
-        </>
+        </Card>
       ))}
       <form onSubmit={handleCommentSubmit}>
         <InputWrapper label="You can add a comment here">
