@@ -59,8 +59,10 @@ function DecisionDetailPage(props) {
   };
 
   const handleCommentSubmit = (event) => {
+    event.preventDefault()
     console.log(event);
     createNewComment(comment, decisionId, token);
+    setComment("")
     setNeedRefresh(true);
   };
 
