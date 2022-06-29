@@ -17,7 +17,7 @@ function NewDecisionForm() {
     result: undefined,
     isPublic: false,
   })
-  const { token } = useContext(SessionContext);
+  const { token, isAuthenticated } = useContext(SessionContext);
 
   function displayResult() {
     if (decisionData.result) {
@@ -305,7 +305,7 @@ function NewDecisionForm() {
   const formStep8 = (
     <div>
       {displayResult()} 
-      {!token ? (
+      {isAuthenticated ? (
         displaySignupButton()
       ) : <div></div>}
       {displayNewDecisionButton()}
