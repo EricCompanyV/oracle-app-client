@@ -1,4 +1,4 @@
-import { Box, Button, Text } from "@mantine/core";
+import { Box, Button, Title } from "@mantine/core";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ThumbDown, ThumbUp } from "tabler-icons-react";
@@ -12,9 +12,9 @@ function Homepage() {
 
   return (
     <>
-      <Text>
+      <Title order={3}>
         {text}
-      </Text>
+      </Title>
       <Box>
         <Button
           component={Link}
