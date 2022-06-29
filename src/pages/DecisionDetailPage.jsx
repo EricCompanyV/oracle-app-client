@@ -59,9 +59,9 @@ function DecisionDetailPage(props) {
   };
 
   const handleCommentSubmit = (event) => {
-    console.log(event)
+    console.log(event);
     createNewComment(comment, decisionId, token);
-    navigate(`/decisions/${decisionId}`)
+    setNeedRefresh(true);
   };
 
   const deleteDecision = async () => {
@@ -78,7 +78,7 @@ function DecisionDetailPage(props) {
         Authorization: `Bearer ${token}`,
       },
     });
-    navigate(`/decisions/${decisionId}`);
+    setNeedRefresh(true);
   };
 
   return (
@@ -98,12 +98,12 @@ function DecisionDetailPage(props) {
         {decision.criteria.map((criterium, index) => {
           if (criterium.name) {
             return (
-              <Text >
+              <Text>
                 Criterium {criterium.name} with a weight of {criterium.weight}{" "}
                 was counted for option {criterium.option}
               </Text>
             );
-          } 
+          }
         })}
       </Text>
       <Divider></Divider>
@@ -137,7 +137,7 @@ function DecisionDetailPage(props) {
             {comment.content + " by " + comment.author.username}
           </Text>
           {comment.author._id === user._id ? (
-            <ActionIcon onClick={()=>deleteComment(comment._id)}>
+            <ActionIcon onClick={() => deleteComment(comment._id)}>
               <Trash size={48} strokeWidth={2} color={"#bf4058"} />
             </ActionIcon>
           ) : (

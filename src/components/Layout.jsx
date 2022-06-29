@@ -96,7 +96,9 @@ function Layout({ children }) {
                 User
               </Anchor></div>}
             {isAuthenticated ? (
-                <ActionIcon onClick={logout}>
+                <ActionIcon component={NavLink}
+                to="/"
+                onClick={logout}>
                 <Logout size={48} strokeWidth={2} color={'black'} />
               </ActionIcon>
             ) : (

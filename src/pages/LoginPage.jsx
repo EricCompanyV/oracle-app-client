@@ -20,15 +20,14 @@ function LoginPage() {
     },
   });
 
-
   const logUser = async (values) => {
     try {
       const response = await login(values);
-      declareUser(response.tempUser);
       if (response.status === "KO") {
         throw new Error(response.message);
       } else {
         authenticateUser(response.token);
+        declareUser(response.tempUser);
       }
     } catch (error) {}
   };
