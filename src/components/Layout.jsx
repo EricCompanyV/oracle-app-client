@@ -22,7 +22,6 @@ function Layout({ children }) {
   const [opened, setOpened] = useState(false);
 
   const { isAuthenticated, logout, user } = useContext(SessionContext);
-  console.log(user)
   return (
     <AppShell
       styles={{

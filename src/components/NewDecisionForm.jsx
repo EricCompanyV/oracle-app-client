@@ -19,15 +19,43 @@ function NewDecisionForm() {
   })
   const { token } = useContext(SessionContext);
 
+  function displayResult() {
+    if (decisionData.result) {
+      return (
+        <p>{"You should do " + decisionData.options[0] + "."}</p>
+      )
+    } else {
+      return (
+        <p>{"You should do " + decisionData.options[1] + "."}</p>
+      )
+    }
+  }
+
+  function displaySignupButton(){
+    return (
+      <Button type="submit" onClick={()=> {
+        navigate("/signup", {decisionData})
+      }}>Go to Signup</Button>
+    )
+  }
+
   const resetNewDecisionForm = () => {
     setFormStep(1);
+    setDecisionData({
+      name: "",
+      description: "",
+      options: ["", ""],
+      criteria: [{}, {}, {}, {}, {}, {}, {}],
+      result: undefined,
+      isPublic: false,
+    })
   }
 
   const displayNewDecisionButton = () => {
     return (
       <Button
         type="button"
-        onClick={resetNewDecisionForm()}
+        onClick={resetNewDecisionForm}
       >
         Make another decision
       </Button>
@@ -59,7 +87,6 @@ function NewDecisionForm() {
       decision = false;
     }
     setDecisionData(previousState => {
-      console.log("setDecisionData is running")
       let newState = structuredClone(previousState);
       newState.result = decision;
       createNewDecision(newState, token);
@@ -278,7 +305,7 @@ function NewDecisionForm() {
       {!token ? (
         displaySignupButton()
       ) : <div></div>}
-      {displayNewDecisionButton}
+      {displayNewDecisionButton()}
     </div>
   )
 

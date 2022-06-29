@@ -58,7 +58,6 @@ export const checkToken = async token => {
     
   
 export const createNewDecision = async (decision, token) => {
-    console.log("createNewDecision running")
     const response = await fetch(`${BASE_API_URL}/api/decisions/create`, {
       method: 'POST',
       headers: {
