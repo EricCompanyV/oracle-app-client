@@ -40,7 +40,7 @@ function Layout({ children }) {
           p="md"
           hiddenBreakpoint="sm"
           hidden={!opened}
-          width={{ sm: 200, lg: 300 }}
+          width={{ sm: 120, lg: 180 }}
         >
           <Anchor
                 component={NavLink}

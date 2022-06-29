@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import { SessionContext } from '../contexts/SessionContext';
 import { BASE_API_URL } from '../utils/constants';
-import { Anchor } from "@mantine/core";
+import { Title } from "@mantine/core";
+import Decision from '../components/Decision';
+
 
 function AllDecisionsPage(props) {
     const {token} = useContext(SessionContext)
@@ -24,20 +25,11 @@ function AllDecisionsPage(props) {
 
     return (
         <div>
-            These are all the decisions that have been made.
-            {decisions.map((decision) => {
-                return (
-                    <div key={decision._id}>
-                        <Anchor
-                            component={NavLink}
-                            to={`/decisions/${decision._id}`}
-                        >
-                            {decision.name}
-                        </Anchor>
-                        <p> Final result is:{decision.result ? decision.options[0]: decision.options[1]}</p>
-                    </div>
+            <Title order={1}>These are all the decisions that have been made.</Title>
+            {decisions.map((decision) => (
+                    <Decision decision={decision}/>
                 )
-            })}
+            )}
         </div>
     );
 }
