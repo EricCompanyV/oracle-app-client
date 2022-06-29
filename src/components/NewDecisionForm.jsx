@@ -117,8 +117,10 @@ function NewDecisionForm() {
   }
 
   const handleCriteriaInput = event => {
-    let newCriteriaArray = decisionData.criteria
-    newCriteriaArray[event.target.name].name = event.target.value
+    let newDecisionData = structuredClone(decisionData);
+    newDecisionData.criteria[event.target.name].name = event.target.value;
+    newDecisionData.criteria[event.target.name].option = "";
+    setDecisionData(newDecisionData)
   }
 
   const handleWeightInput = event => {
@@ -128,8 +130,9 @@ function NewDecisionForm() {
   }
 
   const handlePreferencesInput = event => {
-    let newCriteriaArray = decisionData.criteria
-    newCriteriaArray[event.target.name].option = event.target.value
+    let newDecisionData = structuredClone(decisionData);
+    newDecisionData.criteria[event.target.name].option = event.target.value;
+    setDecisionData(newDecisionData);
   }
 
   const formStep1 = (
