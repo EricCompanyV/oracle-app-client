@@ -61,6 +61,7 @@ function DecisionDetailPage(props) {
   const handleCommentSubmit = (event) => {
     console.log(event)
     createNewComment(comment, decisionId, token);
+    navigate(`/decisions/${decisionId}`)
   };
 
   const deleteDecision = async () => {
@@ -77,7 +78,7 @@ function DecisionDetailPage(props) {
         Authorization: `Bearer ${token}`,
       },
     });
-    navigate("/decisions");
+    navigate(`/decisions/${decisionId}`);
   };
 
   return (
