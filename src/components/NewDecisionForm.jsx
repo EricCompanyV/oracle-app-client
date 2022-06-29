@@ -19,17 +19,58 @@ function NewDecisionForm() {
   })
   const { token } = useContext(SessionContext);
 
-  console.log(decisionData);
+  const resetNewDecisionForm = () => {
+    setFormStep(1);
+  }
+
+  const displayNewDecisionButton = () => {
+    return (
+      <Button
+        type="button"
+        onClick={resetNewDecisionForm()}
+      >
+        Make another decision
+      </Button>
+    )
+  }
 
   const handlePartialSubmit = (event) => {
     event.preventDefault()
     setFormStep(formStep + 1);
   }
 
+  const calculateResult = () => {
+    let decision = true;
+
+    let pointsForOption1 = 0;
+    let pointsForOption2 = 0;
+
+    decisionData.criteria.map((criterium) => {
+      if (criterium.option === "1") {
+        pointsForOption1 += parseInt(criterium.weight);
+      } else if (criterium.option === "2") {
+        pointsForOption2 += parseInt(criterium.weight);
+      }
+      return "";
+    })
+
+
+    if (pointsForOption2 > pointsForOption1) {
+      decision = false;
+    }
+    setDecisionData(previousState => {
+      console.log("setDecisionData is running")
+      let newState = structuredClone(previousState);
+      newState.result = decision;
+      createNewDecision(newState, token);
+      return newState;
+    })
+  }
 
   const handleFinalSubmit = () => {
     calculateResult();
-    setFormStep(formStep + 1 );
+    setFormStep(formStep + 1);
+    
   }
 
   const handleInput = event => {
@@ -54,42 +95,14 @@ function NewDecisionForm() {
   }
 
   const handleWeightInput = event => {
-    console.log(event.target.value)
-    let newCriteriaArray = decisionData.criteria
-    newCriteriaArray[event.target.name].weight = event.target.value
+    let newDecisionData = structuredClone(decisionData);
+    newDecisionData.criteria[event.target.name].weight = event.target.value;
+    setDecisionData(newDecisionData);
   }
 
   const handlePreferencesInput = event => {
     let newCriteriaArray = decisionData.criteria
     newCriteriaArray[event.target.name].option = event.target.value
-  }
-
-  const calculateResult = () => {
-    let decision = true;
-
-    let pointsForOption1 = 0;
-    let pointsForOption2 = 0;
-
-    decisionData.criteria.map((criterium) => {
-      if (criterium.option === "1") {
-        console.log("Being counted for option1", criterium.name)
-        pointsForOption1 += parseInt(criterium.weight);
-      } else if (criterium.option === "2") {
-        console.log("Being counted for option2", criterium.name)
-        pointsForOption2 += parseInt(criterium.weight);
-      }
-      return
-    })
-
-    console.log("Points for option 1:", pointsForOption1, "Points for option 2", pointsForOption2)
-
-    if (pointsForOption2 > pointsForOption1) {
-      decision = false;
-    }
-
-    setDecisionData(decisionData => ({
-      ...decisionData, result: decision
-    }))
   }
 
   const formStep1 = (
@@ -195,7 +208,6 @@ function NewDecisionForm() {
         description="How important are these criteria to you? Enter a number between 1 and 10, where 10 is of the utmost importance."
       >
         {decisionData.criteria.map((criterium, index) => {
-          console.log(criterium.name)
           if (criterium.name) {
             return (
               <InputWrapper
@@ -260,26 +272,15 @@ function NewDecisionForm() {
     </div>
   )
 
-  function displayResult() {
-    if (decisionData.result) {
-      return (
-        <p>{"You should do " + decisionData.options[0] + "."}</p>
-      )
-    } else {
-      return (
-        <p>{"You should do " + decisionData.options[1] + "."}</p>
-      )
-    }
-  }
-
-  function displaySignupButton(){
-    return (
-      <Button type="submit" onClick={()=> {
-        navigate("/signup", {decisionData})
-      }}>Go to Signup</Button>
-    )
-  }
-
+  const formStep8 = (
+    <div>
+      {displayResult()} 
+      {!token ? (
+        displaySignupButton()
+      ) : <div></div>}
+      {displayNewDecisionButton}
+    </div>
+  )
 
   switch (formStep) {
     case 1:
@@ -297,16 +298,7 @@ function NewDecisionForm() {
     case 7:
       return formStep7
     case 8:
-      {createNewDecision(decisionData, token)}
-      return (
-        <div>
-          {displayResult()} 
-          {!token ? (
-            displaySignupButton()
-          ) : <div></div>}
-        </div>
-        
-      )
+      return formStep8
     default:
       break;
   }
