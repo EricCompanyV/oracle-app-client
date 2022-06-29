@@ -56,7 +56,7 @@ function Layout({ children }) {
       }
       footer={
         <Footer height={60} p="md">
-          Application footer
+          An <a href="https://github.com/EricCompanyV/">Eric</a> & <a href="https://github.com/ickejohannes/">Johannes</a> Production, Ⓒ2022
         </Footer>
       }
       header={
