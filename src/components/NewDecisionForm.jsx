@@ -33,7 +33,7 @@ function NewDecisionForm() {
 
   function displaySignupButton(){
     return (
-      <Button type="submit" onClick={()=> {
+      <Button style={{marginTop: 10, marginRight: 20}} type="submit" onClick={()=> {
         navigate("/signup", {decisionData})
       }}>Go to Signup</Button>
     )
@@ -149,7 +149,7 @@ function NewDecisionForm() {
           onChange={handleInput}
         />
       </InputWrapper>
-      <Button type="submit">Submit</Button>
+      <Button style={{marginTop: 10}} type="submit">Submit</Button>
     </form>
   )
   
@@ -166,7 +166,7 @@ function NewDecisionForm() {
           onChange={handleInput}
         />
       </InputWrapper>
-      <Button type="submit">Submit</Button>
+      <Button style={{marginTop: 10}} type="submit">Submit</Button>
     </form>
   )
 
@@ -184,6 +184,7 @@ function NewDecisionForm() {
           onChange={handleOptionsInput}
         />
         <Input
+        style={{marginTop:10}}
           required
           type="text"
           name="1"
@@ -191,7 +192,7 @@ function NewDecisionForm() {
           onChange={handleOptionsInput}
         />
       </InputWrapper>
-      <Button type="submit">Submit</Button>
+      <Button style={{marginTop: 10}} type="submit">Submit</Button>
     </form>
   )
 
@@ -206,6 +207,7 @@ function NewDecisionForm() {
           if (index < 2) {
             return (
               <Input
+              style={{marginTop:5}}
                 key={index}
                 type="text"
                 name={index}
@@ -217,6 +219,7 @@ function NewDecisionForm() {
           } else {
             return (
               <Input
+              style={{marginTop:5}}
                 key={index}
                 type="text"
                 name={index}
@@ -227,7 +230,7 @@ function NewDecisionForm() {
           }
         })}
       </InputWrapper>
-      <Button type="submit">Submit</Button>
+      <Button style={{marginTop: 10}} type="submit">Submit</Button>
     </form>
   )
   
@@ -259,7 +262,7 @@ function NewDecisionForm() {
           }
         })}
       </InputWrapper>
-      <Button type="submit">Submit</Button>
+      <Button style={{marginTop: 10}} type="submit">Submit</Button>
     </form>
   )
 
@@ -291,23 +294,23 @@ function NewDecisionForm() {
           }
         })}
       </InputWrapper>
-      <Button type="submit">Submit</Button>
+      <Button style={{marginTop: 10}} type="submit">Submit</Button>
     </form>
   )
 
   const formStep7 = (
     <div>
       <p>You told me everything I need to know. Are you ready to decide?</p>
-      <Button type="submit" onClick={handleFinalSubmit}>Yes</Button>
+      <Button style={{marginTop: 10}} type="submit" onClick={handleFinalSubmit}>Yes</Button>
     </div>
   )
 
   const formStep8 = (
     <div>
       {displayResult()} 
-      {isAuthenticated ? (
+      {!isAuthenticated && (
         displaySignupButton()
-      ) : <div></div>}
+      ) }
       {displayNewDecisionButton()}
     </div>
   )

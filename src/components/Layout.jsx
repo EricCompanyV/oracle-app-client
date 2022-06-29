@@ -60,9 +60,9 @@ function Layout({ children }) {
         </Footer>
       }
       header={
-        <Header height={70} p="md" align="center">
+        <Header  height={70} p="md" align="center">
           <div
-            style={{ display: "flex", alignItems: "center", height: "100%" }}
+            style={{ display: "flex", alignItems: "center", height: "100%",  }}
           >
             <MediaQuery largerThan="sm" styles={{ display: "none" }}>
               <Burger
@@ -74,17 +74,29 @@ function Layout({ children }) {
               />
             </MediaQuery>{" "}
             {!isAuthenticated ? (
-              <><Anchor
-                component={NavLink}
-                to="/signup"
-                style={({ isActive }) =>
-                  isActive ? { color: "blue" } : { color: "black" }
-                }
-              >
-                Signup
-              </Anchor>
-              </>
-            ) : <div><Anchor
+              <div id="header-links" style={{display:"flex", flexDirection: "row" }}>
+                <Anchor
+                  styles={{margin: "100px"}}
+                  component={NavLink}
+                  to="/signup"
+                  style={({ isActive }) =>
+                    isActive ? { color: "blue" } : { color: "black" }
+                  }
+                >
+                  Signup
+                </Anchor>
+                <Anchor
+                  component={NavLink}
+                  to="/login"
+                  style={({ isActive,  }) =>
+                    isActive ? { color: "blue" } : { color: "black" } 
+                  }
+                >
+                  Login
+                </Anchor>
+              </div>
+            ) : <div id="header-links" style={{display:"flex", flexDirection: "row", marginLeft: 10 }}>
+            <Anchor
             onClick={(event)=> console.log(event)}
                 component={NavLink}
                 to={`/decisions/user/${user._id}`}
@@ -93,24 +105,11 @@ function Layout({ children }) {
                 }
               >
                 User
-              </Anchor></div>}
-            {isAuthenticated ? (
-                <ActionIcon component={NavLink}
+              </Anchor><ActionIcon component={NavLink}
                 to="/"
                 onClick={logout}>
-                <Logout size={48} strokeWidth={2} color={'black'} />
-              </ActionIcon>
-            ) : (
-              <Anchor
-                component={NavLink}
-                to="/login"
-                style={({ isActive }) =>
-                  isActive ? { color: "blue" } : { color: "black" }
-                }
-              >
-                Login
-              </Anchor>
-            )}
+                <Logout size={32} strokeWidth={2} color={'black'} />
+              </ActionIcon></div>}
           </div>
         </Header>
       }
