@@ -123,19 +123,24 @@ Comment model
 ## API Endpoints (backend routes)
 
 }
-| HTTP Method | URL user-pr ofile | Request Body | Success status | 500or Status | Desall decisionson |
-| ----------- | --decisions- | -user------------------ | -------------- | 500--------- | ---Edit decision--------------------------------------------------------------------------------------------------------- |
-| GET | `/decisionsofile ` | Saved session | 200 | 404 | Check ifdecisions logged in and return profile page500 500 |
-| POST | `/auth/signup` | {name, email, password} | 200 | 500 | Chec decision detailsot empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
-| POST | `/decisions/user/:userIde {username, password | 20200 | 50500 | Checks decisionelds not efrom a usermpty (422), if user exists (404), and if password matches (404), then stores user in session | | PUTT | `/decisionslogou | (empty) | 204 | 400 | Logs out the user |
-| POST | `/search/add` | {platform, title, type, id} | | 400 | Add new backlog element and add to user |
-| GET | `/backlog/series` | | | 400 | Show series elements |
-| GET | `/backlog/films` | | 200 | 500 | Show film elements |
-| DELETE | `/decisionsog/ga | | | | Show games elements | | GET | `/media/:id` | | 201 | 400 | Show specific element | | PUT |`/media/:id` | | 200 | 500 | Delete decision element | | POSTEE |`/comm | | 201 | 400 | delete element |
-| GET | `/done/series` | | | 400 | Show series elements |
-| GET | `/done/films` | | | | Show film elements |
-| GET | `/done/games` | | | | Show games elements |
-ents/create
+| HTTP Method | URL                       | Request Body               | Success status | Error Status | Description            |
+| GET         | `/ `                      |                            | 200            | 404          | HomePage               |
+| POST        | `/auth/signup`            | {username, password}       | 200            | 500          | Signup a new 
+user, check if user already exists (500)                                                                                        |
+| POST        | `/auth/login`             | {username, password}       | 200            | 500          | Login a user           |
+| POST        | `/auth/logout`            |                            | 200            | 500          | Login a user out       |
+| GET         | `/auth/verify `           |                            | 200            | 404          | Check user token       |
+authentication                                                                                                                  |
+| POST        | `/decisions/create`       | {name,description, options,| 200            | 500          | Creates a new decision 
+ from a user                                 criteria, result, author}                                                          | 
+| GET         | `/decisions`              |                            | 200            | 500          | Renders all decisions  |
+| GET         | `/decisions/:id`          |                            | 200            | 500          | Renders a decision     |
+| PUT         | `/decisions/:id`          |                            | 200            | 500          | Edits a decision       |
+| DELETE      | `/decisions/:id`          |                            | 200            | 500          | Deletes a decision     |
+| GET         | `/decisions/user/:userId` |                            | 200            | 500          | Renders users decisions|  
+| POST        | `/comments/create`        | {comment, decisionId}      | 201            | 500          | Add new backlog element|
+ and add to user                                                                                                                |
+| DELETE      | `/comments/:id`           |                            | 200            | 400          | Delete specific element| 
 <br>
 
 ## Links
@@ -153,7 +158,7 @@ The url to your repository and to your deployed project
 
 [Server repository Link](https://github.com/EricCompanyV/oracle-app-server)
 
-[Deployed App Link](https://backlog-quest.herokuapp.com/login)
+[Deployed App Link](https://incredible-alpaca-0cf5e6.netlify.app/)
 
 ### Slides
 
