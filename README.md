@@ -1,70 +1,173 @@
-# Getting Started with Create React App
+# The Oracle
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+This is an app that takes life's most difficult decisions for you. You merely have to enter a question, your options and your criteria, the Oracle will then take care of the rest and tell you what to do.
 
-### `npm start`
+## User Stories
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **404:** As an anon/user I can see a 404 page if I try to reach a page that does not exist so that I know it's my fault
+- **Signup:** As an anon I can sign up in the platform so that I can start creating and managing my decisions
+- **Login:** As a user I can login to the platform so that I can start creating and managing my decision
+- **Logout:** As a user I can logout from the platform so no one else can modify my information
+- **Add elements** As a user I can add decisions
+- **Edit elements** As a user I can edit decisions
+- **Delete elements** As a user I can delete decisions
+- **Check profile** As a user I can check my profile and decisions
+- **View all decisions** As a user I can view all decisions in the database
+- **Comment decisions** As a user I can create comments on decisions
+- **Delete comments** As a user I can delete comments
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Backlog
 
-### `npm test`
+- Taking other people's decision and adding statistic to decisions ("55% of users would do X")
+- Making decisions public/private to decide whether they appear for other users
+- Add search bar and filters
+- Add user images
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br>
 
-### `npm run build`
+# Client / Frontend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## React Router Routes (React App)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Path              | Component                      | Permissions                | Behavior                                                      |
+| ----------------- | ------------------------------ | -------------------------- | ------------------------------------------------------------- |
+| `/`               | SplashPage                     | public `<Route>`           | Home page                                                     |
+| `/signup`         | SignupPage                     | anon only `<AnonRoute>`    | Signup form, link to login, navigate to homepage after signup |
+| `/login`          | LoginPage                      | anon only `<AnonRoute>`    | Login form, link to signup, navigate to homepage after login  |
+| `/logout`         | n/a                            | user only `<PrivateRoute>` | Navigate to homepage after logout, expire session             |
+| `/backlog/series` | NavBar, ElementList, FooterBar | user only `<PrivateRoute>` | Shows all tv series on backlog                                |
+| `/backlog/films`  | NavBar, ElementList, FooterBar | user only `<PrivateRoute>` | Shows all films on backlog                                    |
+| `/backlog/games`  | NavBar, ElementList, FooterBar | user only `<PrivateRoute>` | Shows all games on backlog                                    |
+| `/search/series`  | SearchForm, SearchResults      | user only `<PrivateRoute>` | Search a tv series to be added                                |
+| `/search/films`   | SearchForm, SearchResults      | user only `<PrivateRoute>` | Search a film to be added                                     |
+| `/search/games`   | SearchForm, SearchResults      | user only `<PrivateRoute>` | Search a game to be added                                     |
+| `/add/:id`        | ElementInfo                    | user only `<PrivateRoute>` | Add an element to the backlog                                 |
+| `/profile`        | Profile, Stats                 | user only `<PrivateRoute>` | Check profile with stat information                           |
+| `/done/series`    | Done list for Series           | user only `<PrivateRoute>` | Shows all tv series finished                                  |
+| `/done/films`     | Done list for films            | user only `<PrivateRoute>` | Shows all films finished                                      |
+| `/done/games`     | Done list for games            | user only `<PrivateRoute>` | Shows all videogames finished                                 |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Components
 
-### `npm run eject`
+- LoginPage
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- SignupPage
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Homepage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- NotFoundPage
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- AllDecisionsPage
 
-## Learn More
+- AllUserDecisionsPage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- DecisionDetailPage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Layout
 
-### Code Splitting
+- Anonymous Route
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Decision
 
-### Analyzing the Bundle Size
+- NewDecisionForm
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- UpdateDecisionModal
 
-### Making a Progressive Web App
+## Services
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Auth Service
 
-### Advanced Configuration
+  - auth.login(user)
+  - auth.signup(user)
+  - auth.logout()
+  - auth.me()
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Decision Service
 
-### Deployment
+  - decision.detail(id)
+  - decision.add(id)
+  - decision.delete(id)
+  - decision.update(id)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- External API
+  - API for decisions
 
-### `npm run build` fails to minify
+<br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Server / Backend
+
+## Models
+
+User model
+
+    username: String,
+    hashedPassword: String,
+    timestamps
+
+Decision model
+
+    name: String,
+    description: String,
+    options: [String],
+    criteria: [{ name: String, weight: Number, option: String }],
+    author: { type: Schema.Types.ObjectId, ref: "User" },
+    result: Boolean,
+    isPublic: Boolean,
+
+Comment model
+
+    content: String,
+    decision: {type: Schema.Types.ObjectId, ref: "Decision"},
+    author: { type: Schema.Types.ObjectId, ref: "User" }
+    isPublic: Boolean,
+
+}
+
+## API Endpoints (backend routes)
+
+}
+| HTTP Method | URL user-pr ofile | Request Body | Success status | 500or Status | Desall decisionson |
+| ----------- | --decisions- | -user------------------ | -------------- | 500--------- | ---Edit decision--------------------------------------------------------------------------------------------------------- |
+| GET | `/decisionsofile ` | Saved session | 200 | 404 | Check ifdecisions logged in and return profile page500 500 |
+| POST | `/auth/signup` | {name, email, password} | 200 | 500 | Chec decision detailsot empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
+| POST | `/decisions/user/:userIde {username, password | 20200 | 50500 | Checks decisionelds not efrom a usermpty (422), if user exists (404), and if password matches (404), then stores user in session | | PUTT | `/decisionslogou | (empty) | 204 | 400 | Logs out the user |
+| POST | `/search/add` | {platform, title, type, id} | | 400 | Add new backlog element and add to user |
+| GET | `/backlog/series` | | | 400 | Show series elements |
+| GET | `/backlog/films` | | 200 | 500 | Show film elements |
+| DELETE | `/decisionsog/ga | | | | Show games elements | | GET | `/media/:id` | | 201 | 400 | Show specific element | | PUT |`/media/:id` | | 200 | 500 | Delete decision element | | POSTEE |`/comm | | 201 | 400 | delete element |
+| GET | `/done/series` | | | 400 | Show series elements |
+| GET | `/done/films` | | | | Show film elements |
+| GET | `/done/games` | | | | Show games elements |
+ents/create
+<br>
+
+## Links
+
+### Trello/Kanban
+
+[Link to your trello board](https://trello.com/b/iloDccrZ/backlog-quest)
+or picture of your physical board
+
+### Git
+
+The url to your repository and to your deployed project
+
+[Client repository Link](https://github.com/jorgeberrizbeitia/backlog-quest)
+
+[Server repository Link](https://github.com/jorgeberrizbeitia/backlog-quest-server)
+
+[Deployed App Link](https://backlog-quest.herokuapp.com/login)
+
+### Slides
+
+The url to your presentation slides
+
+[Slides Link](https://docs.google.com/presentation/d/1zndKZ8DC-_i391alptPKsAKanCSXTrLVL39L3xtEjz8/edit?usp=sharing)
+
+```
+
+```
