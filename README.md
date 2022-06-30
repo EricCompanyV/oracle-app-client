@@ -130,7 +130,7 @@ Comment model
 user, check if user already exists (500)                                                                                        |
 | POST        | `/auth/login`             | {username, password}       | 200            | 500          | Login a user           |
 | POST        | `/auth/logout`            |                            | 200            | 500          | Login a user out       |
-| GET         | `/auth/verify `           |                            | 200            | 404          | Check user token       |
+| GET         | `/auth/verify `           |                            | 200            | 404          | Check user token       
 authentication                                                                                                                  |
 | POST        | `/decisions/create`       | {name,description, options,criteria, result, author}| 200            | 500          | Creates a new decision 
  from a user                                                                                           | 
@@ -139,7 +139,7 @@ authentication                                                                  
 | PUT         | `/decisions/:id`          |                            | 200            | 500          | Edits a decision       |
 | DELETE      | `/decisions/:id`          |                            | 200            | 500          | Deletes a decision     |
 | GET         | `/decisions/user/:userId` |                            | 200            | 500          | Renders users decisions|  
-| POST        | `/comments/create`        | {comment, decisionId}      | 201            | 500          | Add new backlog element|
+| POST        | `/comments/create`        | {comment, decisionId}      | 201            | 500          | Add new backlog element
  and add to user                                                                                                                |
 | DELETE      | `/comments/:id`           |                            | 200            | 400          | Delete specific element| 
 <br>
