@@ -33,23 +33,16 @@ This is an app that takes life's most difficult decisions for you. You merely ha
 
 ## React Router Routes (React App)
 
-| Path              | Component                      | Permissions                | Behavior                                                      |
-| ----------------- | ------------------------------ | -------------------------- | ------------------------------------------------------------- |
-| `/`               | SplashPage                     | public `<Route>`           | Home page                                                     |
-| `/signup`         | SignupPage                     | anon only `<AnonRoute>`    | Signup form, link to login, navigate to homepage after signup |
-| `/login`          | LoginPage                      | anon only `<AnonRoute>`    | Login form, link to signup, navigate to homepage after login  |
-| `/logout`         | n/a                            | user only `<PrivateRoute>` | Navigate to homepage after logout, expire session             |
-| `/backlog/series` | NavBar, ElementList, FooterBar | user only `<PrivateRoute>` | Shows all tv series on backlog                                |
-| `/backlog/films`  | NavBar, ElementList, FooterBar | user only `<PrivateRoute>` | Shows all films on backlog                                    |
-| `/backlog/games`  | NavBar, ElementList, FooterBar | user only `<PrivateRoute>` | Shows all games on backlog                                    |
-| `/search/series`  | SearchForm, SearchResults      | user only `<PrivateRoute>` | Search a tv series to be added                                |
-| `/search/films`   | SearchForm, SearchResults      | user only `<PrivateRoute>` | Search a film to be added                                     |
-| `/search/games`   | SearchForm, SearchResults      | user only `<PrivateRoute>` | Search a game to be added                                     |
-| `/add/:id`        | ElementInfo                    | user only `<PrivateRoute>` | Add an element to the backlog                                 |
-| `/profile`        | Profile, Stats                 | user only `<PrivateRoute>` | Check profile with stat information                           |
-| `/done/series`    | Done list for Series           | user only `<PrivateRoute>` | Shows all tv series finished                                  |
-| `/done/films`     | Done list for films            | user only `<PrivateRoute>` | Shows all films finished                                      |
-| `/done/games`     | Done list for games            | user only `<PrivateRoute>` | Shows all videogames finished                                 |
+| Path                      | Component                    | Permissions                | Behavior                                                      |
+| ------------------------- | ---------------------------- | -------------------------- | ------------------------------------------------------------- |
+| `/`                       | Layout, Homepage             | public `<Route>`           | Homepage                                                      |
+| `/signup`                 | Layout, SignupPage           | anon only `<AnonRoute>`    | Signup form, link to login, navigate to login after signup    |
+| `/login`                  | Layout, LoginPage            | anon only `<AnonRoute>`    | Login form, link to signup, navigate to decisions after login |
+| `/logout`                 | n/a                          | user only `<PrivateRoute>` | Navigate to homepage after logout, expire session             |
+| `/decisions`              | Layout, AllDecisionsPage     | user only `<PrivateRoute>` | Shows all decisions in db                                     |
+| `/decisions/:decisionId`  | Layout, DecisionDetailPage   | user only `<PrivateRoute>` | Shows details on a decision, comments                         |
+| `/decisions/user/:userId` | Layout, AllUserDecisionsPage | user only `<PrivateRoute>` | Shows all decisions created by user                           |
+| `/decision-form`          | Layout, NewDecisionForm      | user only `<PrivateRoute>` | Create new decision                                           |
 
 ## Components
 
