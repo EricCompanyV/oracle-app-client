@@ -134,8 +134,8 @@ user, check if user already exists (500)                                        
 | POST        | `/auth/logout`            |                            | 200            | 500          | Login a user out       |
 | GET         | `/auth/verify `           |                            | 200            | 404          | Check user token       |
 authentication                                                                                                                  |
-| POST        | `/decisions/create`       | {name,description, options,| 200            | 500          | Creates a new decision 
- from a user                                 criteria, result, author}                                                          | 
+| POST        | `/decisions/create`       | {name,description, options,criteria, result, author}| 200            | 500          | Creates a new decision 
+ from a user                                                                                           | 
 | GET         | `/decisions`              |                            | 200            | 500          | Renders all decisions  |
 | GET         | `/decisions/:id`          |                            | 200            | 500          | Renders a decision     |
 | PUT         | `/decisions/:id`          |                            | 200            | 500          | Edits a decision       |
