@@ -15,6 +15,3 @@ body {
   margin-left: 1rem;
 }
 
-#header-links > *:first-child {
-  margin-left: 0px;
-}

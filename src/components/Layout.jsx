@@ -8,14 +8,14 @@ import {
   Burger,
   useMantineTheme,
   Anchor,
-  ActionIcon
+  ActionIcon,
 } from "@mantine/core";
 
 import { NavLink } from "react-router-dom";
 import { useContext, useState } from "react";
 import { SessionContext } from "../contexts/SessionContext";
 
-import { Logout } from 'tabler-icons-react'
+import { Logout, Home, User } from "tabler-icons-react";
 
 function Layout({ children }) {
   const theme = useMantineTheme();
@@ -43,26 +43,36 @@ function Layout({ children }) {
           width={{ sm: 120, lg: 180 }}
         >
           <Anchor
-                component={NavLink}
-            to='/decision-form'
-                style={({ isActive }) => (isActive ? { color: 'tomato' } : undefined)}
-          >New decision</Anchor>
+            component={NavLink}
+            to="/decision-form"
+            style={({ isActive }) =>
+              isActive ? { color: "tomato" } : undefined
+            }
+          >
+            New decision
+          </Anchor>
           <Anchor
-                component={NavLink}
-            to='/decisions'
-                style={({ isActive }) => (isActive ? { color: 'tomato' } : undefined)}
-          >All decisions</Anchor>
+            component={NavLink}
+            to="/decisions"
+            style={({ isActive }) =>
+              isActive ? { color: "tomato" } : undefined
+            }
+          >
+            All decisions
+          </Anchor>
         </Navbar>
       }
       footer={
         <Footer height={60} p="md">
-          An <a href="https://github.com/EricCompanyV/">Eric</a> & <a href="https://github.com/ickejohannes/">Johannes</a> Production, Ⓒ2022
+          An <a href="https://github.com/EricCompanyV/">Eric</a> &{" "}
+          <a href="https://github.com/ickejohannes/">Johannes</a> Production,
+          Ⓒ2022
         </Footer>
       }
       header={
-        <Header  height={70} p="md" align="center">
+        <Header height={70} p="md" align="center">
           <div
-            style={{ display: "flex", alignItems: "center", height: "100%",  }}
+            style={{ display: "flex", alignItems: "center", height: "100%" }}
           >
             <MediaQuery largerThan="sm" styles={{ display: "none" }}>
               <Burger
@@ -73,10 +83,16 @@ function Layout({ children }) {
                 mr="xl"
               />
             </MediaQuery>{" "}
+            <ActionIcon component={NavLink} to="/" >
+              <Home style={{}} size={32} strokeWidth={2} color={"black"} />
+            </ActionIcon>
             {!isAuthenticated ? (
-              <div id="header-links" style={{display:"flex", flexDirection: "row" }}>
+              <div
+                id="header-links"
+                style={{ display: "flex", flexDirection: "row" }}
+              >
                 <Anchor
-                  styles={{margin: "100px"}}
+                  styles={{ margin: "100px" }}
                   component={NavLink}
                   to="/signup"
                   style={({ isActive }) =>
@@ -88,28 +104,32 @@ function Layout({ children }) {
                 <Anchor
                   component={NavLink}
                   to="/login"
-                  style={({ isActive,  }) =>
-                    isActive ? { color: "blue" } : { color: "black" } 
+                  style={({ isActive }) =>
+                    isActive ? { color: "blue" } : { color: "black" }
                   }
                 >
                   Login
                 </Anchor>
               </div>
-            ) : <div id="header-links" style={{display:"flex", flexDirection: "row", marginLeft: 10 }}>
-            <Anchor
-            onClick={(event)=> console.log(event)}
-                component={NavLink}
-                to={`/decisions/user/${user._id}`}
-                style={({ isActive }) =>
-                  isActive ? { color: "blue" } : { color: "black" }
-                }
+            ) : (
+              <div
+                id="header-links"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                }}
               >
-                User
-              </Anchor><ActionIcon component={NavLink}
-                to="/"
-                onClick={logout}>
-                <Logout size={32} strokeWidth={2} color={'black'} />
-              </ActionIcon></div>}
+                <ActionIcon
+                  component={NavLink}
+                  to={`/decisions/user/${user._id}`}
+                >
+                  <User size={26} strokeWidth={2} color={"black"} />
+                </ActionIcon>
+                <ActionIcon component={NavLink} to="/" onClick={logout}>
+                  <Logout size={26} strokeWidth={2} color={"black"} />
+                </ActionIcon>
+              </div>
+            )}
           </div>
         </Header>
       }
