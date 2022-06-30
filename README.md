@@ -124,9 +124,7 @@ Comment model
 
 
 | HTTP Method | URL                       | Request Body               | Success status | Error Status | Description            |
-
 | ----------- | ------------------------- | -------------------------- | -------------- | ------------ | ---------------------- |
-
 | GET         | `/ `                      |                            | 200            | 404          | HomePage               |
 | POST        | `/auth/signup`            | {username, password}       | 200            | 500          | Signup a new 
 user, check if user already exists (500)                                                                                        |
