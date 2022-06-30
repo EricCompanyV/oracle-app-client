@@ -149,16 +149,16 @@ ents/create
 
 ### Trello/Kanban
 
-[Link to your trello board](https://trello.com/b/iloDccrZ/backlog-quest)
+[Link to your trello board](https://trello.com/b/qU5o16oP/the-oracle)
 or picture of your physical board
 
 ### Git
 
 The url to your repository and to your deployed project
 
-[Client repository Link](https://github.com/jorgeberrizbeitia/backlog-quest)
+[Client repository Link](https://github.com/EricCompanyV/oracle-app-client)
 
-[Server repository Link](https://github.com/jorgeberrizbeitia/backlog-quest-server)
+[Server repository Link](https://github.com/EricCompanyV/oracle-app-server)
 
 [Deployed App Link](https://backlog-quest.herokuapp.com/login)
 
@@ -166,7 +166,7 @@ The url to your repository and to your deployed project
 
 The url to your presentation slides
 
-[Slides Link](https://docs.google.com/presentation/d/1zndKZ8DC-_i391alptPKsAKanCSXTrLVL39L3xtEjz8/edit?usp=sharing)
+[Slides Link](https://docs.google.com/presentation/d/16s9MfYlfMru8c4E5U_rlkRhUCbMctfe5weMvgPnU8YA/edit?usp=sharing)
 
 ```
 
